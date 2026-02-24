@@ -342,5 +342,5 @@ void MyImage::advancedFeature3()
 
     pixels = newPixels;
 
-    std::cout << "Blur Applied\n";
+    std::cout << "Box Blur Applied\n";
 }
