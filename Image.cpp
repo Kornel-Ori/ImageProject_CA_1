@@ -248,13 +248,99 @@ void MyImage::flipVertical()
 
     cout << "Flip Vertical" << endl;
 }
-void MyImage::advancedFeature1() {
-    cout << "Advanced Feature 1" << endl;
-}
-void MyImage::advancedFeature2() {
-    cout << "Advanced FEature 2" << endl;
-}
-void MyImage::advancedFeature3() {
-    cout << "Advanced Feature 3" << endl;
+
+void MyImage::advancedFeature1()
+{
+    int oldWidth = static_cast<int>(size.x);
+    int oldHeight = static_cast<int>(size.y);
+
+    std::vector<RGB> newPixels(oldWidth * oldHeight);
+
+    for (int y = 0; y < oldHeight; y++)
+    {
+        for (int x = 0; x < oldWidth; x++)
+        {
+            int oldIndex = y * oldWidth + x;
+
+            int newX = oldHeight - 1 - y;
+            int newY = x;
+
+            int newIndex = newY * oldHeight + newX;
+
+            newPixels[newIndex] = pixels[oldIndex];
+        }
+    }
+
+    pixels = newPixels;
+
+    size.x = oldHeight;
+    size.y = oldWidth;
+
+    std::cout << "Rotate 90 Clockwise\n";
 }
 
+void MyImage::advancedFeature2()
+{
+    int width = static_cast<int>(size.x);
+    int height = static_cast<int>(size.y);
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width / 2; x++)
+        {
+            int leftIndex = y * width + x;
+            int rightIndex = y * width + (width - 1 - x);
+
+            pixels[rightIndex] = pixels[leftIndex];
+        }
+    }
+
+    std::cout << "Mirror Left to Right\n";
+}
+void MyImage::advancedFeature3()
+{
+    int width = static_cast<int>(size.x);
+    int height = static_cast<int>(size.y);
+
+    std::vector<RGB> newPixels = pixels;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            int totalR = 0;
+            int totalG = 0;
+            int totalB = 0;
+            int count = 0;
+
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                    {
+                        int index = ny * width + nx;
+
+                        totalR += pixels[index].r;
+                        totalG += pixels[index].g;
+                        totalB += pixels[index].b;
+                        count++;
+                    }
+                }
+            }
+
+            int currentIndex = y * width + x;
+
+            newPixels[currentIndex].r = totalR / count;
+            newPixels[currentIndex].g = totalG / count;
+            newPixels[currentIndex].b = totalB / count;
+        }
+    }
+
+    pixels = newPixels;
+
+    std::cout << "Blur Applied\n";
+}
