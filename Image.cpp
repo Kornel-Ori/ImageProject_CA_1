@@ -169,6 +169,10 @@ void MyImage::save()
 
 void MyImage::filterRed()
 {
+    for (auto &p : pixels) {
+        p.g = 0;
+        p.b = 0;
+    }
    cout << "Filter Red" << endl;
 
 }
