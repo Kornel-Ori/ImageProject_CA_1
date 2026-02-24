@@ -176,21 +176,76 @@ void MyImage::filterRed()
    cout << "Filter Red" << endl;
 
 }
-void MyImage::filterGreen() {
+
+// loop through every pixel in the image
+// remove red and blue channels so only green remains (same for the others)
+void MyImage::filterGreen()
+{
+    for (auto &p : pixels) {
+        p.r = 0;
+        p.b = 0;
+    }
     cout << "Filter Green" << endl;
 }
-void MyImage::filterBlue() {
+void MyImage::filterBlue()
+{
+    for (auto &p : pixels) {
+        p.r = 0;
+        p.g = 0;
+    }
     cout << "Filter Blue" << endl;
 }
 
-void MyImage::greyScale() {
-    cout << "Filter Greyscale" << endl;
+// converts pixel to greyscale by averaging RGB values
+// setting rgb to the same value removes the colour
+void MyImage::greyScale()
+{
+    for (auto &p : pixels) {
+        unsigned char grey = (p.r + p.g + p.b) / 3;
+        p.r = grey;
+        p.g = grey;
+        p.b = grey;
+    }
+
+    cout << "Greyscale Applied" << endl;
 }
 
-void MyImage::flipHorizontal() {
+// loop through each row
+// swap pixels from left side with matching pixel on right side
+// only loop to half the width to avoid swapping twice (same with vertical but with columns)
+void MyImage::flipHorizontal()
+{
+    int width = (int)this->size.x;
+    int height = (int)this->size.y;
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width / 2; x++) {
+
+            int leftIndex  = (y * width) + x;
+            int rightIndex = (y * width) + (width - 1 - x);
+
+            std::swap(pixels[leftIndex], pixels[rightIndex]);
+        }
+    }
+
     cout << "Flip Horizontal" << endl;
 }
-void MyImage::flipVertical() {
+
+void MyImage::flipVertical()
+{
+    int width = (int)this->size.x;
+    int height = (int)this->size.y;
+
+    for (int y = 0; y < height / 2; y++) {
+        for (int x = 0; x < width; x++) {
+
+            int topIndex    = (y * width) + x;
+            int bottomIndex = ((height - 1 - y) * width) + x;
+
+            std::swap(pixels[topIndex], pixels[bottomIndex]);
+        }
+    }
+
     cout << "Flip Vertical" << endl;
 }
 void MyImage::advancedFeature1() {
