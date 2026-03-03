@@ -40,9 +40,9 @@ public:
     // functions to implement
     void flipHorizontal();
     void flipVertical();
-    void advancedFeature1();
-    void advancedFeature2();
-    void advancedFeature3();
+    void rotateLeft();
+    void mirror();
+    void blur();
     void reload();
     void filterRed();
     void filterGreen();

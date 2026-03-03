@@ -249,7 +249,7 @@ void MyImage::flipVertical()
     cout << "Flip Vertical" << endl;
 }
 
-void MyImage::advancedFeature1()
+void MyImage::rotateLeft()
 {
     int oldWidth = static_cast<int>(size.x);
     int oldHeight = static_cast<int>(size.y);
@@ -279,7 +279,7 @@ void MyImage::advancedFeature1()
     std::cout << "Rotate 90 Clockwise\n";
 }
 
-void MyImage::advancedFeature2()
+void MyImage::mirror()
 {
     int width = static_cast<int>(size.x);
     int height = static_cast<int>(size.y);
@@ -297,7 +297,7 @@ void MyImage::advancedFeature2()
 
     std::cout << "Mirror Left to Right\n";
 }
-void MyImage::advancedFeature3()
+void MyImage::blur()
 {
     int width = static_cast<int>(size.x);
     int height = static_cast<int>(size.y);
