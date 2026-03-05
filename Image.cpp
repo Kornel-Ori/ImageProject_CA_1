@@ -249,36 +249,45 @@ void MyImage::flipVertical()
     cout << "Flip Vertical" << endl;
 }
 
+// moves each pixel to its new rotated position and swap width/height
 void MyImage::rotateLeft()
 {
+    //original size
     int oldWidth = static_cast<int>(size.x);
     int oldHeight = static_cast<int>(size.y);
 
+    //new array
     std::vector<RGB> newPixels(oldWidth * oldHeight);
 
+    //loops through pixels
     for (int y = 0; y < oldHeight; y++)
     {
         for (int x = 0; x < oldWidth; x++)
         {
             int oldIndex = y * oldWidth + x;
 
+            //new rotated position
             int newX = oldHeight - 1 - y;
             int newY = x;
 
             int newIndex = newY * oldHeight + newX;
 
+            //copy pixel
             newPixels[newIndex] = pixels[oldIndex];
         }
     }
 
+    //replace pixel
     pixels = newPixels;
 
+    //swap width and height
     size.x = oldHeight;
     size.y = oldWidth;
 
     std::cout << "Rotate 90 Clockwise\n";
 }
 
+//mirrors left side pixels to the matching right side
 void MyImage::mirror()
 {
     int width = static_cast<int>(size.x);
@@ -286,22 +295,25 @@ void MyImage::mirror()
 
     for (int y = 0; y < height; y++)
     {
+        //only go to middle
         for (int x = 0; x < width / 2; x++)
         {
             int leftIndex = y * width + x;
             int rightIndex = y * width + (width - 1 - x);
 
+            //copy left pixel to right
             pixels[rightIndex] = pixels[leftIndex];
         }
     }
-
     std::cout << "Mirror Left to Right\n";
 }
-void MyImage::blur()
+
+//box blue averages colour of surrouding pixelsvoid MyImage::blur()
 {
     int width = static_cast<int>(size.x);
     int height = static_cast<int>(size.y);
 
+    //copy of pixels
     std::vector<RGB> newPixels = pixels;
 
     for (int y = 0; y < height; y++)
@@ -313,6 +325,7 @@ void MyImage::blur()
             int totalB = 0;
             int count = 0;
 
+            //checks surrounding 3x3
             for (int dy = -1; dy <= 1; dy++)
             {
                 for (int dx = -1; dx <= 1; dx++)
@@ -320,6 +333,7 @@ void MyImage::blur()
                     int nx = x + dx;
                     int ny = y + dy;
 
+                    //ignores the pixels outside
                     if (nx >= 0 && nx < width && ny >= 0 && ny < height)
                     {
                         int index = ny * width + nx;
@@ -334,12 +348,14 @@ void MyImage::blur()
 
             int currentIndex = y * width + x;
 
+            //average colour
             newPixels[currentIndex].r = totalR / count;
             newPixels[currentIndex].g = totalG / count;
             newPixels[currentIndex].b = totalB / count;
         }
     }
 
+    //replaces pixels
     pixels = newPixels;
 
     std::cout << "Box Blur Applied\n";
