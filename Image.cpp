@@ -308,8 +308,8 @@ void MyImage::mirror()
     std::cout << "Mirror Left to Right\n";
 }
 
-//box blue averages colour of surrouding pixelsvoid MyImage::blur()
-{
+//box blue averages colour of surrouding pixels
+void MyImage::blur() {
     int width = static_cast<int>(size.x);
     int height = static_cast<int>(size.y);
 
